@@ -1,0 +1,27 @@
+{
+  "name": "movieo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "docker compose up --build",
+    "start": "docker compose up -d",
+    "stop": "docker compose down",
+    "logs": "docker compose logs -f",
+    "install:local":  "npm run install:server && npm run install:client",
+    "install:server": "cd server && npm install",
+    "install:client": "cd client && npm install",
+    "start:local": "npm run start:server && npm run start:client",
+    "start:server": "cd server && npm run dev",
+    "start:client": "cd client && npm run dev",
+    "test": "npm run test:server && npm run test:client",
+    "test:server": "cd server && npm run test",
+    "test:client": "cd client && npm run test"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

@@ -1,0 +1,50 @@
+.grid-item {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 5px;
+  break-inside: avoid;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.grid-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.grid-item:hover img {
+  transform: scale(1.05);
+  filter: brightness(0.3); /* Dim background on hover */
+}
+
+.movie-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.grid-item:hover .movie-info {
+  opacity: 1;
+}
+
+.movie-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.movie-director,
+.movie-plot {
+  font-size: 0.9rem;
+  margin: 2px 0;
+}

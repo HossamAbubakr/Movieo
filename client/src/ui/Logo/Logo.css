@@ -1,0 +1,9 @@
+.logo {
+  margin-top: -30px;
+  font-weight: 700;
+  font-size: clamp(4rem, 2.5vw, 8rem);
+  text-align: center;
+  color: #f9f1cc;
+  text-shadow: 5px 5px 0px #ffb650, 10px 10px 0px #ffd662, 15px 15px 0px #ff80bf,
+    20px 20px 0px #ef5097, 25px 25px 0px #6868ac, 30px 30px 0px #90b1e0;
+}
