@@ -1,32 +1,33 @@
-import { useState, useEffect, useCallback } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Movie } from "../types/movieType";
 import { searchMovies } from "../services/movieService";
 
 export function useMovies(query: string) {
-  const [movies, setMovies] = useState<Movie[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const {
+    data: movies,
+    error,
+    isLoading,
+    refetch,
+  } = useQuery<Movie[]>({
+    queryKey: ["movies", query],
+    queryFn: async () => {
+      try {
+        const result = await searchMovies(query);
+        return result || [];
+      } catch (err) {
+        console.error(err);
+        throw new Error("Failed to fetch movies");
+      }
+    },
+    enabled: !!query,
+    staleTime: 1000 * 60 * 5,
+    retry: 2,
+  });
 
-  const fetchMovies = useCallback(async () => {
-    if (!query) return;
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const results = await searchMovies(query);
-      setMovies(results);
-    } catch (err) {
-      setError("Failed to fetch movies");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  }, [query]);
-
-  useEffect(() => {
-    fetchMovies();
-  }, [fetchMovies]);
-
-  return { movies, loading, error, refetch: fetchMovies };
+  return {
+    movies,
+    loading: isLoading,
+    error: error ? error.message : null,
+    refetch,
+  };
 }

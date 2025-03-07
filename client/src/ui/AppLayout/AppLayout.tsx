@@ -10,7 +10,7 @@ import Logo from "../Logo/Logo";
 function AppLayout() {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounce(query, 700);
-  const { movies, loading, error } = useMovies(debouncedQuery);
+  const { movies = [], loading, error } = useMovies(debouncedQuery);
 
   const showPlaceholder = !query.trim();
 
