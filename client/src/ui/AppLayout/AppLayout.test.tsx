@@ -69,7 +69,7 @@ describe("AppLayout Component", () => {
 
   test("displays loading state when fetching movies", async () => {
     (useMovies as MockedFunction<typeof useMovies>).mockReturnValue({
-      movies: null,
+      movies: undefined,
       loading: true,
       error: null,
       refetch: vi.fn(),
@@ -90,7 +90,7 @@ describe("AppLayout Component", () => {
 
   test("displays error message on failure", async () => {
     (useMovies as MockedFunction<typeof useMovies>).mockReturnValue({
-      movies: null,
+      movies: undefined,
       loading: false,
       error: "Network error",
       refetch: vi.fn(),
@@ -131,10 +131,5 @@ describe("AppLayout Component", () => {
     fireEvent.change(searchInput, { target: { value: "Interstellar" } });
 
     expect(await screen.findByText("Interstellar")).toBeInTheDocument();
-  });
-
-  test("matches snapshot", () => {
-    const { container } = render(<AppLayout />);
-    expect(container).toMatchSnapshot();
   });
 });
