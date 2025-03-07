@@ -6,10 +6,29 @@ Movieo is a powerful full-stack movie search and indexing application built with
 
 - **Movie Search & Details** – Quickly search for movies and view detailed information.
 - **Efficient Data Fetching** – Pull, save, and index movies from OMDB efficiently.
-- **Debounced Search** – Optimized search experience with reduced API calls.
+- **React Query Integration** – Efficient state management, caching, and background refetching.
 - **PostgreSQL Database** – Persistent movie storage.
 - **Elasticsearch Integration** – Fast and intelligent search with n-grams for partial matching.
 - **Docker Support** – Easily run the project using Docker.
+
+---
+
+## ✨ React Query Integration
+
+Movieo leverages **React Query** for efficient state management and data fetching in the frontend.
+
+### ✔️ Benefits of React Query:
+
+- **Automatic caching** – Prevents unnecessary API requests by storing fetched data.
+- **Background refetching** – Keeps movie data fresh without requiring manual refresh.
+- **Error handling** – Provides built-in retry logic for failed requests.
+- **Performance optimization** – Reduces re-renders and improves application responsiveness.
+
+---
+
+## 🔄 Why Fetching is Not in a CRON or Timed Service
+
+The movie fetching service is designed to fetch **movies from the past**, meaning no new releases are being added dynamically. Since the dataset is static, there is no need for a scheduled CRON job or periodic updates. Instead, data is retrieved on server start, ensuring efficiency without unnecessary processing.
 
 ---
 
