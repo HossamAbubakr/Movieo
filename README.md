@@ -10,19 +10,7 @@ Movieo is a powerful full-stack movie search and indexing application built with
 - **PostgreSQL Database** – Persistent movie storage.
 - **Elasticsearch Integration** – Fast and intelligent search with n-grams for partial matching.
 - **Docker Support** – Easily run the project using Docker.
-
----
-
-## ✨ React Query Integration
-
-Movieo leverages **React Query** for efficient state management and data fetching in the frontend.
-
-### ✔️ Benefits of React Query:
-
-- **Automatic caching** – Prevents unnecessary API requests by storing fetched data.
-- **Background refetching** – Keeps movie data fresh without requiring manual refresh.
-- **Error handling** – Provides built-in retry logic for failed requests.
-- **Performance optimization** – Reduces re-renders and improves application responsiveness.
+- **Husky Pre-Commit & Pre-Push Hooks** – Enforces linting and testing before committing and pushing.
 
 ---
 
@@ -58,8 +46,14 @@ Get your API key from: [OMDB API](https://www.omdbapi.com/apikey.aspx)
 2. Install dependencies:
 
    ```sh
-   npm run install:local
+   npm install
    ```
+
+   - The `postinstall` script will automatically install all dependencies in both the `server` and `client` folders.
+   - If you want to skip the postinstall script, use:
+     ```sh
+     npm install --ignore-scripts
+     ```
 
 3. Create and configure environment files:
 
@@ -137,7 +131,7 @@ Get your API key from: [OMDB API](https://www.omdbapi.com/apikey.aspx)
 Feel free to edit the indexing function parameters in
 
 ```
-    server\src\util\indexer.helper.ts
+    server/src/util/indexer.helper.ts
 ```
 
 To customize the term and release year of the movies.
