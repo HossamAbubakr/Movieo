@@ -7,18 +7,22 @@
     "start": "docker compose up -d",
     "stop": "docker compose down",
     "logs": "docker compose logs -f",
-    "install:local":  "npm run install:server && npm run install:client",
+    "install:local": "concurrently \"npm run install:server\" \"npm run install:client\"",
     "install:server": "cd server && npm install",
     "install:client": "cd client && npm install",
-    "start:local": "npm run start:server && npm run start:client",
+    "start:local": "concurrently \"npm run start:server\" \"npm run start:client\"",
     "start:server": "cd server && npm run dev",
     "start:client": "cd client && npm run dev",
-    "test": "npm run test:server && npm run test:client",
+    "test": "concurrently \"npm run test:server\" \"npm run test:client\"",
     "test:server": "cd server && npm run test",
-    "test:client": "cd client && npm run test"
+    "test:client": "cd client && npm run test",
+    "postinstall": "npm run install:local",
+    "prepare": "node .husky/install.mjs"
   },
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3"
   },
   "keywords": [],
   "author": "",

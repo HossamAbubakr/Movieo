@@ -1,0 +1,16 @@
+# Get changed files
+CHANGED_FILES=$(git diff --name-only --cached)
+
+# Check if changes are in client
+if echo "$CHANGED_FILES" | grep -q '^client/'; then
+  echo "Running client linting..."
+  cd client
+  npm run lint
+fi
+
+# Check if changes are in server
+if echo "$CHANGED_FILES" | grep -q '^server/'; then
+  echo "Running server linting..."
+  cd server
+  npm run lint
+fi

@@ -1,0 +1,16 @@
+# Get changed files
+CHANGED_FILES=$(git diff --name-only HEAD origin/main)
+
+# Check if changes are in client
+if echo "$CHANGED_FILES" | grep -q '^client/'; then
+  echo "Running client tests..."
+  cd client
+  npm run test
+fi
+
+# Check if changes are in server
+if echo "$CHANGED_FILES" | grep -q '^server/'; then
+  echo "Running server tests..."
+  cd server
+  npm run test
+fi
