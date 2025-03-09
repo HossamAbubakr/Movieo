@@ -8,6 +8,7 @@ Movieo is a powerful full-stack movie search and indexing application built with
 - **Efficient Data Fetching** – Pull, save, and index movies from OMDB efficiently.
 - **React Query Integration** – Efficient state management, caching, and background refetching.
 - **PostgreSQL Database** – Persistent movie storage.
+- **Prisma ORM** - Modern database toolkit that provides type safety, query optimization, and easy migrations.
 - **Elasticsearch Integration** – Fast and intelligent search with n-grams for partial matching.
 - **Docker Support** – Easily run the project using Docker.
 - **Husky Pre-Commit & Pre-Push Hooks** – Enforces linting and testing before committing and pushing.
@@ -55,7 +56,26 @@ Get your API key from: [OMDB API](https://www.omdbapi.com/apikey.aspx)
      npm install --ignore-scripts
      ```
 
-3. Create and configure environment files:
+3. Set up Prisma:
+
+   - Navigate to the `server/` folder:
+     ```sh
+     cd server
+     ```
+   - Initialize Prisma:
+     ```sh
+     npx prisma init
+     ```
+   - Generate Prisma client:
+     ```sh
+     npx prisma generate
+     ```
+   - Run database migrations:
+     ```sh
+     npx prisma migrate dev --name init
+     ```
+
+4. Create and configure environment files:
 
    - In the `server/` folder, create a `.env` file:
      ```sh
@@ -71,7 +91,7 @@ Get your API key from: [OMDB API](https://www.omdbapi.com/apikey.aspx)
      VITE_API_URL=http://localhost:5000/api
      ```
 
-4. Start the application:
+5. Start the application:
 
    ```sh
    npm run start:local
@@ -79,7 +99,7 @@ Get your API key from: [OMDB API](https://www.omdbapi.com/apikey.aspx)
 
 ---
 
-### 🐳 Running with Docker
+### 🐳 Running with Docker (RECOMMENDED)
 
 1. Clone the repository:
 
