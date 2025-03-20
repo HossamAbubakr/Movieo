@@ -39,10 +39,28 @@ export const indexMovies = async (movies: MovieDetails[]) => {
   }
 };
 
-export const searchMovies = async (query: string) =>
-  (
-    await elasticClient.search({
-      index: INDEX_NAME,
-      query: { multi_match: { query, fields: ["title", "director", "plot"] } },
-    })
-  ).hits.hits.map(({ _source }) => _source);
+export const searchMovies = async (query: string, page: number = 1, size: number = 10) => {
+  const from = (page - 1) * size;
+
+  const response = await elasticClient.search({
+    index: INDEX_NAME,
+    from,
+    size,
+    query: {
+      multi_match: {
+        query,
+        fields: ["title", "director", "plot"],
+      },
+    },
+  });
+
+  const totalHits = typeof response.hits.total === "object" ? response.hits.total.value : (response.hits.total ?? 0);
+
+  return {
+    movies: response.hits.hits.map(({ _source }) => _source),
+    total: totalHits,
+    page,
+    size,
+    totalPages: Math.ceil(totalHits / size),
+  };
+};
