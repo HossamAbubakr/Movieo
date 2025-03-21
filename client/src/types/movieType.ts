@@ -5,3 +5,11 @@ export type Movie = {
   director: string;
   plot: string;
 };
+
+export type MovieResponse = {
+  movies: Movie[];
+  total: number;
+  page: number;
+  size: number;
+  totalPages: number;
+};

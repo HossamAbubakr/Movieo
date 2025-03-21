@@ -13,7 +13,7 @@ export function useMovies(query: string) {
     queryFn: async () => {
       try {
         const result = await searchMovies(query);
-        return result || [];
+        return result?.movies || [];
       } catch (err) {
         console.error(err);
         throw new Error("Failed to fetch movies");
