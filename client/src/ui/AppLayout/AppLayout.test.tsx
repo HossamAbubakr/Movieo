@@ -8,6 +8,11 @@ import {
 import { describe, expect, test, vi, MockedFunction } from "vitest";
 import AppLayout from "./AppLayout";
 import { useMovies } from "../../hooks/useMovies";
+import {
+  InfiniteQueryObserverResult,
+  InfiniteData,
+} from "@tanstack/react-query";
+import { Movie } from "../../types/movieType";
 
 vi.mock("../../hooks/useMovies", async () => {
   return {
@@ -15,13 +20,40 @@ vi.mock("../../hooks/useMovies", async () => {
   };
 });
 
+vi.mock("react-virtuoso", () => ({
+  VirtuosoGrid: ({
+    data,
+    itemContent,
+    listClassName,
+  }: {
+    data: Movie[];
+    itemContent: (index: number, movie: Movie) => React.ReactNode;
+    listClassName?: string;
+  }) => (
+    <div className={listClassName}>
+      {data.map((item, index) => (
+        <div key={item.imdb_id || index}>{itemContent(index, item)}</div>
+      ))}
+    </div>
+  ),
+}));
+
 describe("AppLayout Component", () => {
   beforeEach(() => {
     (useMovies as MockedFunction<typeof useMovies>).mockReturnValue({
       movies: [],
       loading: false,
       error: null,
-      refetch: vi.fn(),
+      fetchingNextPage: false,
+      fetchNextPage: function (): Promise<
+        InfiniteQueryObserverResult<
+          InfiniteData<{ movies: Movie[]; totalPages: number }, unknown>,
+          Error
+        >
+      > {
+        throw new Error("Function not implemented.");
+      },
+      hasNextPage: false,
     });
   });
 
@@ -48,13 +80,20 @@ describe("AppLayout Component", () => {
   });
 
   test("fetches movies when user types a query", async () => {
-    const mockRefetch = vi.fn();
-
     (useMovies as MockedFunction<typeof useMovies>).mockReturnValue({
       movies: [],
       loading: false,
       error: null,
-      refetch: mockRefetch,
+      fetchingNextPage: false,
+      fetchNextPage: function (): Promise<
+        InfiniteQueryObserverResult<
+          InfiniteData<{ movies: Movie[]; totalPages: number }, unknown>,
+          Error
+        >
+      > {
+        throw new Error("Function not implemented.");
+      },
+      hasNextPage: false,
     });
 
     render(<AppLayout />);
@@ -69,10 +108,19 @@ describe("AppLayout Component", () => {
 
   test("displays loading state when fetching movies", async () => {
     (useMovies as MockedFunction<typeof useMovies>).mockReturnValue({
-      movies: undefined,
+      movies: [],
       loading: true,
       error: null,
-      refetch: vi.fn(),
+      fetchingNextPage: false,
+      fetchNextPage: function (): Promise<
+        InfiniteQueryObserverResult<
+          InfiniteData<{ movies: Movie[]; totalPages: number }, unknown>,
+          Error
+        >
+      > {
+        throw new Error("Function not implemented.");
+      },
+      hasNextPage: false,
     });
 
     render(<AppLayout />);
@@ -90,10 +138,19 @@ describe("AppLayout Component", () => {
 
   test("displays error message on failure", async () => {
     (useMovies as MockedFunction<typeof useMovies>).mockReturnValue({
-      movies: undefined,
+      movies: [],
       loading: false,
       error: "Network error",
-      refetch: vi.fn(),
+      fetchingNextPage: false,
+      fetchNextPage: function (): Promise<
+        InfiniteQueryObserverResult<
+          InfiniteData<{ movies: Movie[]; totalPages: number }, unknown>,
+          Error
+        >
+      > {
+        throw new Error("Function not implemented.");
+      },
+      hasNextPage: false,
     });
 
     render(<AppLayout />);
@@ -122,7 +179,16 @@ describe("AppLayout Component", () => {
       ],
       loading: false,
       error: null,
-      refetch: vi.fn(),
+      fetchingNextPage: false,
+      fetchNextPage: function (): Promise<
+        InfiniteQueryObserverResult<
+          InfiniteData<{ movies: Movie[]; totalPages: number }, unknown>,
+          Error
+        >
+      > {
+        throw new Error("Function not implemented.");
+      },
+      hasNextPage: false,
     });
 
     render(<AppLayout />);
