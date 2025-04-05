@@ -10,8 +10,14 @@ import Logo from "../Logo/Logo";
 function AppLayout() {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounce(query, 700);
-  const { movies = [], loading, error } = useMovies(debouncedQuery);
-
+  const {
+    movies = [],
+    loading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    fetchingNextPage,
+  } = useMovies(debouncedQuery);
   const showPlaceholder = !query.trim();
 
   return (
@@ -24,7 +30,14 @@ function AppLayout() {
           message="Start by searching for a movie!"
         />
       ) : (
-        <MovieGrid movies={movies} loading={loading} error={error} />
+        <MovieGrid
+          movies={movies}
+          loading={loading}
+          error={error}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage}
+          fetchingNextPage={fetchingNextPage}
+        />
       )}
     </>
   );
