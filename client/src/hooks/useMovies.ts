@@ -1,23 +1,30 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Movie } from "../types/movieType";
 import { searchMovies } from "../services/movieService";
 
+type PaginatedMovies = {
+  movies: Movie[];
+  totalPages: number;
+};
+
 export function useMovies(query: string) {
   const {
-    data: movies,
+    data,
     error,
     isLoading,
-    refetch,
-  } = useQuery<Movie[]>({
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery<PaginatedMovies>({
     queryKey: ["movies", query],
-    queryFn: async () => {
-      try {
-        const result = await searchMovies(query);
-        return result?.movies || [];
-      } catch (err) {
-        console.error(err);
-        throw new Error("Failed to fetch movies");
-      }
+    queryFn: async ({ pageParam = 1 }) => {
+      const result = await searchMovies(query, pageParam);
+      return result || { movies: [], totalPages: 1 };
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length + 1;
+      return nextPage <= lastPage.totalPages ? nextPage : undefined;
     },
     enabled: !!query,
     staleTime: 1000 * 60 * 5,
@@ -25,9 +32,11 @@ export function useMovies(query: string) {
   });
 
   return {
-    movies,
+    movies: data?.pages.flatMap((page) => page.movies) || [],
     loading: isLoading,
+    fetchingNextPage: isFetchingNextPage,
     error: error ? error.message : null,
-    refetch,
+    fetchNextPage,
+    hasNextPage,
   };
 }
