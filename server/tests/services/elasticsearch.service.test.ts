@@ -87,7 +87,13 @@ describe("Elasticsearch Service", () => {
 
       const results = await searchMovies("Test");
 
-      expect(results).toEqual([{ title: "Test Movie", director: "John Doe", plot: "A test plot" }]);
+      expect(results).toEqual({
+        movies: [{ director: "John Doe", plot: "A test plot", title: "Test Movie" }],
+        page: 1,
+        size: 10,
+        total: 0,
+        totalPages: 0,
+      });
     });
 
     it("should return an empty array if no results are found", async () => {
@@ -95,7 +101,7 @@ describe("Elasticsearch Service", () => {
 
       const results = await searchMovies("Unknown");
 
-      expect(results).toEqual([]);
+      expect(results).toEqual({ movies: [], page: 1, size: 10, total: 0, totalPages: 0 });
     });
   });
 });

@@ -22,32 +22,32 @@ describe("MovieController.search", () => {
     await MovieController.search(req as Request, res as Response, next);
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
-      message: "The 'search' query parameter is required and must be at least 3 characters long.",
+      message: "The 'query' query parameter is required and must be at least 3 characters long.",
     });
   });
 
   it("should return 400 if search query is less than 3 characters", async () => {
-    req.query!.search = "ab";
+    req.query!.query = "ab";
     await MovieController.search(req as Request, res as Response, next);
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
-      message: "The 'search' query parameter is required and must be at least 3 characters long.",
+      message: "The 'query' query parameter is required and must be at least 3 characters long.",
     });
   });
 
   it("should return search results when valid query is provided", async () => {
-    req.query!.search = "Space";
+    req.query!.query = "Space";
     const mockResults = [{ title: "2001: A Space Odyssey" }];
     (searchMovies as jest.Mock).mockResolvedValue(mockResults);
 
     await MovieController.search(req as Request, res as Response, next);
 
-    expect(searchMovies).toHaveBeenCalledWith("Space");
+    expect(searchMovies).toHaveBeenCalledWith("Space", 1, 10);
     expect(res.json).toHaveBeenCalledWith(mockResults);
   });
 
   it("should handle errors and call next with the error", async () => {
-    req.query!.search = "Batman";
+    req.query!.query = "Batman";
     const mockError = new Error("Elasticsearch error");
     (searchMovies as jest.Mock).mockRejectedValue(mockError);
 
