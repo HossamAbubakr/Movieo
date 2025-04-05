@@ -9,7 +9,8 @@
     "p:generate": "prisma generate",
     "build": "tsc",
     "test": "jest --ci --runInBand",
-    "lint": "eslint . --ext .ts,.tsx"
+    "lint": "eslint . --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
