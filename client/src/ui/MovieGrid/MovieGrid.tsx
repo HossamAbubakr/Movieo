@@ -37,7 +37,7 @@ const MovieGrid = ({
 
   return (
     <VirtuosoGrid
-      style={{ height: "100vh", overflowX: "hidden" }}
+      style={{ height: "80vh", overflowX: "hidden" }}
       data={movies}
       endReached={() => {
         if (hasNextPage && !fetchingNextPage) {
