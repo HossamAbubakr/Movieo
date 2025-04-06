@@ -8,4 +8,5 @@ body {
   background: linear-gradient(45deg, #190f2c, #200b30);
   font-family: "Roboto Mono", monospace;
   padding: 15px;
+  overflow-y: hidden;
 }
