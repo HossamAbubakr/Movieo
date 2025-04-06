@@ -1,3 +1,5 @@
+![CI workflow](https://github.com/HossamAbubakr/Movieo/actions/workflows/ci.yml/badge.svg)
+
 # 🎬 Movieo
 
 Movieo is a powerful full-stack movie search and indexing application built with React, TypeScript, Node.js, Prisma, and Elasticsearch. It allows users to efficiently fetch, save, and index movies from the OMDB API based on a search term and year.
@@ -7,11 +9,12 @@ Movieo is a powerful full-stack movie search and indexing application built with
 - **Movie Search & Details** – Quickly search for movies and view detailed information.
 - **Efficient Data Fetching** – Pull, save, and index movies from OMDB efficiently.
 - **React Query Integration** – Efficient state management, caching, and background refetching.
+- **React Virtuoso** – Virtualized movie list, efficiently view thousands of movies on the screen without performance loss.
 - **PostgreSQL Database** – Persistent movie storage.
 - **Prisma ORM** - Modern database toolkit that provides type safety, query optimization, and easy migrations.
 - **Elasticsearch Integration** – Fast and intelligent search with n-grams for partial matching.
 - **Docker Support** – Easily run the project using Docker.
-- **Husky Pre-Commit & Pre-Push Hooks** – Enforces linting and testing before committing and pushing.
+- **Husky Support** – Enforces linting before committing.
 
 ---
 
